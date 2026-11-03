@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ClipDesk Privacy Policy</title>
+<meta name="description" content="Privacy policy for ClipDesk, the screen recorder for Windows.">
+<style>
+:root { --bg:#ffffff; --fg:#1b1b1f; --muted:#5c5f66; --line:#e3e4e8; --accent:#2f5bd3; --code:#f3f4f6; }
+@media (prefers-color-scheme: dark) { :root { --bg:#141518; --fg:#e8e9ec; --muted:#a3a6ad; --line:#2c2e33; --accent:#8fb0ff; --code:#1f2126; } }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.65 "Segoe UI", system-ui, -apple-system, Arial, sans-serif; }
+main { max-width:760px; margin:0 auto; padding:48px 20px 64px; }
+h1 { font-size:2rem; line-height:1.2; margin:0 0 4px; }
+h1 + p { color:var(--muted); margin-top:0; }
+h2 { font-size:1.25rem; margin:2.2em 0 .6em; padding-top:1.2em; border-top:1px solid var(--line); }
+a { color:var(--accent); }
+code { background:var(--code); padding:.1em .35em; border-radius:4px; font-size:.9em; word-break:break-word; }
+table { border-collapse:collapse; width:100%; font-size:.93rem; display:block; overflow-x:auto; }
+th, td { border:1px solid var(--line); padding:8px 10px; text-align:left; vertical-align:top; }
+th { background:var(--code); }
+li { margin:.3em 0; }
+footer { margin-top:48px; color:var(--muted); font-size:.85rem; }
+</style>
+</head>
+<body>
+<main>
+<h1>ClipDesk Privacy Policy</h1>
+<p>Last updated: 2026-11-03</p>
+<h2>Summary</h2>
+<p>ClipDesk is a local screen/webcam recorder. <strong>All recording, video processing,
+webcam background blur, and caption generation happen entirely on your device.</strong>
+ClipDesk does not have its own backend server, does not send your recordings,
+webcam video, audio, or transcripts anywhere, and does not require an internet
+connection to record, edit, blur, or caption a video.</p>
+<p>The only network communication ClipDesk performs is the standard Microsoft
+Store commerce API (<code>Windows.Services.Store</code>) used to check your Free/Pro/
+Business license status and process purchases — this is Microsoft's own
+billing infrastructure, not a ClipDesk server, and is subject to
+<a href="https://privacy.microsoft.com/privacystatement">Microsoft's own privacy statement</a>,
+not this one.</p>
+<h2>What ClipDesk does NOT do</h2>
+<ul>
+<li>Does not upload your screen recordings, webcam footage, or microphone audio
+  anywhere, ever.</li>
+<li>Does not send video frames, audio, or transcripts to any cloud AI/ML service.
+  Webcam background blur (U2NETP) and captions (whisper.cpp <code>tiny</code>, multilingual) both run
+  as bundled, fully offline ONNX/GGML models on your own CPU — no network
+  round-trip, no external inference API.</li>
+<li>Does not include any third-party analytics, advertising, or tracking SDKs.</li>
+<li>Does not read, transmit, or store the contents of other applications beyond
+  what you explicitly choose to capture: a display, region, or window you record,
+  a screenshot you take, or text you ask ClipDesk to extract (OCR) from a screenshot.
+  Capture uses Windows' own screen/webcam capture APIs, and everything is processed locally.</li>
+</ul>
+<h2>What ClipDesk stores locally, and where</h2>
+<table>
+<thead>
+<tr>
+<th>Data</th>
+<th>Where it lives</th>
+<th>Leaves the device?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Recorded video/audio files</td>
+<td>Your chosen output folder (default: <code>Videos\ClipDesk</code>)</td>
+<td>Never, unless you manually share the file yourself</td>
+</tr>
+<tr>
+<td>App settings (theme, output folder, etc.)</td>
+<td><code>ApplicationData.Current.LocalSettings</code> (packaged app local settings)</td>
+<td>Never</td>
+</tr>
+<tr>
+<td>Crash reports</td>
+<td><code>ApplicationData.Current.LocalFolder\Diagnostics\crash_*.json</code></td>
+<td>Never — see "Diagnostics" below</td>
+</tr>
+<tr>
+<td>Optional local usage log (off by default)</td>
+<td><code>ApplicationData.Current.LocalFolder\Diagnostics\usage.log</code></td>
+<td>Never — see "Diagnostics" below</td>
+</tr>
+<tr>
+<td>License/purchase state</td>
+<td>Cached by the Windows Store client (<code>Windows.Services.Store</code>) on your device</td>
+<td>Handled by Microsoft's Store commerce APIs, per Microsoft's own privacy policy</td>
+</tr>
+</tbody>
+</table>
+<h2>Diagnostics feature (opt-in usage log, always-on crash safety net)</h2>
+<p>ClipDesk includes a "Diagnostics" menu with two related, but distinct, pieces
+introduced to make bug reports easier to act on:</p>
+<ol>
+<li><strong>Crash reports</strong> (always on, no toggle): if ClipDesk hits an unexpected
+   error, a JSON file describing the exception (type, message, stack trace, app
+   version, OS version) is written to a local <code>Diagnostics</code> folder on your
+   device. This file is never transmitted automatically — you must explicitly
+   use "Copy last crash report" and paste it yourself (e.g. into a support
+   email or GitHub issue) for anyone to see it.</li>
+<li><strong>Local usage log</strong> (opt-in, default <strong>off</strong>): if you enable "Help improve
+   ClipDesk" in the Diagnostics menu, ClipDesk appends short local log lines
+   (e.g. "a recording finished successfully") to a rotating local text file on
+   your device. As with crash reports, this file stays on your device and is
+   never uploaded — there is currently no telemetry backend this could even be
+   sent to. If that changes in the future (e.g. a real opt-in cloud telemetry
+   service is added), this policy and the in-app toggle description will be
+   updated first, and the setting will remain off by default until you choose
+   to turn it on.</li>
+</ol>
+<h2>Bundled ML models</h2>
+<p>ClipDesk bundles two open-source, offline machine-learning models: U2NETP
+(Apache-2.0, webcam background segmentation) and whisper.cpp's <code>tiny</code>
+(MIT, offline speech-to-text for captions). Both run 100% locally on your
+device's CPU. Their license notices are included with the app (THIRD-PARTY-NOTICES.md).</p>
+<h2>Screenshots, OCR, and scheduled recordings</h2>
+<p>Screenshots you take and text copied from them via OCR are processed entirely on your device
+(offline) and saved only where you choose. If you schedule a recording, ClipDesk starts it at the
+time you set while the app is running; the result is saved locally like any other recording and
+nothing is uploaded.</p>
+<h2>Keystroke overlay (optional, Pro)</h2>
+<p>If you turn on the keystroke overlay, ClipDesk installs a system-wide keyboard hook <strong>only while
+you are recording with the overlay enabled</strong>. Pressed keys are shown on screen so viewers can see
+them, which means <strong>they appear in the recording</strong>. Keys are never logged, stored, or transmitted
+by ClipDesk. Because everything you type is displayed, do not type passwords or other sensitive
+information while the overlay is on. ClipDesk shows a one-time notice the first time you enable it.</p>
+<h2>Camera and microphone access</h2>
+<p>ClipDesk requests webcam and microphone access only to record what you choose
+to record (webcam overlay, or system+mic audio). Windows' own privacy settings
+govern whether ClipDesk can access the camera/microphone at all; ClipDesk
+performs no capture without an explicit user-initiated recording action, and
+does not access the camera/microphone in the background.</p>
+<h2>Children's privacy</h2>
+<p>ClipDesk is a general-purpose productivity tool not directed at children and
+does not knowingly collect personal information from anyone, of any age —
+because it does not collect or transmit personal information at all (see
+above).</p>
+<h2>Changes to this policy</h2>
+<p>If ClipDesk's data handling changes (for example, adding a real cloud
+telemetry backend, cloud sync, or an online captions provider), this file
+will be updated in the same change, and the Store listing's privacy policy
+link will continue to point at the current version.</p>
+<h2>Contact</h2>
+<p>For privacy questions, email <a href="mailto:Justin.Bannister@solidqualitysolutions.com">Justin.Bannister@solidqualitysolutions.com</a> or use the support contact listed on ClipDesk's <a href="https://apps.microsoft.com/detail/9PDRKBN3H6RZ">Microsoft Store page</a>.</p>
+<footer>ClipDesk is published by Justin Bannister on the Microsoft Store.</footer>
+</main>
+</body>
+</html>
